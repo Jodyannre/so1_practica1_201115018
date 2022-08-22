@@ -1,0 +1,41 @@
+package main
+
+import (
+	"context"
+	"crudGo/controllers"
+	"fmt"
+	"net/http"
+	"time"
+
+	"github.com/gorilla/mux"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+)
+
+var (
+	usr     = "joddie"
+	pwd     = "Huitzi12"
+	host    = "172.17.0.2"
+	port    = 27017
+	databse = "practica1"
+)
+
+func main() {
+
+	uri := fmt.Sprintf("mongodb://%s:%s@%s:%d", usr, pwd, host, port)
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
+	if err != nil {
+		panic(err.Error())
+	}
+	err = client.Connect(ctx)
+	router := mux.NewRouter()
+	router.HandleFunc("/car", controllers.Create(client)).Methods("POST")
+	router.HandleFunc("/cars", controllers.GetCars(client)).Methods("GET")
+	router.HandleFunc("/car/{placa}", controllers.GetCar(client)).Methods("GET")
+	router.HandleFunc("/car/{placa}&{color}&{marca}&{serie}&{modelo}",
+		controllers.Update(client)).Methods("PUT")
+	router.HandleFunc("/car/{placa}", controllers.Delete(client)).Methods("DELETE")
+	fmt.Println("App running...")
+	http.ListenAndServe(":3000", router)
+}

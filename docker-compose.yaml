@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  database:
+    container_name: database
+    restart: always
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    #extra_host:
+      #- "host.docker.internal:host-gateway"
+
+  backend:
+    container_name: backend
+    restart: always
+    #build: ./crudGo
+    image: jodyannre/backend_p1_201115018
+    ports:
+      - "4000:4000"
+    depends_on:
+      - database
+    links:
+      - database
+  frontend:
+    container_name: frontend
+    restart: always
+    image: jodyannre/frontend_p1_201115018
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    links:
+      - backend
