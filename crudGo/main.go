@@ -34,8 +34,12 @@ func main() {
 	}
 	//err = client.Connect(ctx)
 	router := mux.NewRouter()
-	router.HandleFunc("/create/{placa}&{color}&{marca}&{serie}&{modelo}", controllers.Create(client)).Methods("GET")
+	/*
+		router.HandleFunc("/create/{placa}&{color}&{marca}&{serie}&{modelo}", controllers.Create(client)).Methods("POST")
+	*/
+	router.HandleFunc("/car", controllers.Create(client)).Methods("POST")
 	router.HandleFunc("/cars", controllers.GetCars(client)).Methods("GET")
+	router.HandleFunc("/logs", controllers.GetLogs(client)).Methods("GET")
 	router.HandleFunc("/car/{placa}", controllers.GetCar(client)).Methods("GET")
 	router.HandleFunc("/car/{placa}&{color}&{marca}&{serie}&{modelo}",
 		controllers.Update(client)).Methods("PUT")
