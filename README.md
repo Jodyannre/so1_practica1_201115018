@@ -4,13 +4,13 @@
 
 ## __Contenedor Backend en Golang__
 
-Se utilizó el lenguaje de programación golang para la realización del servidor de backend para el manejo de la información y las peticiones desde la página web.
+Se utilizó el lenguaje de programación golang para la realización del servidor de backend para el manejo de la información y las peticiones desde la página web.  
 
--Versión de go: 1.17.6
--Contenedor: backend
--Puerto (out/in) : 4000:4000
+-Versión de go: 1.17.6  
+-Contenedor: backend  
+-Puerto (out/in) : 4000:4000  
 
-La estructura del proyecto es la siguiente:
+La estructura del proyecto es la siguiente:  
 
 -- main.go : Archivo que contiene la lógica para levantar el servidor y manejar las rutas  
 -- Controllers  
